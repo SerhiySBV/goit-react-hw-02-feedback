@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Statistics from 'components/Feedback/Statistics';
 import Buttons from 'components/Feedback/Buttons';
 
-class Feedback extends React.Component {
+class Feedback extends Component {
   state = {
     good: 0,
     neutral: 0,
@@ -21,22 +21,23 @@ class Feedback extends React.Component {
   };
   badFeedback = () => {
     this.setState(prevState => {
-      console.log(prevState.bad);
       return {
         bad: prevState.bad + 1,
       };
     });
   };
 
-  //   totalFeedback = () => {
-  //     this.State(prevState => {
-  //       const totalFeedback = prevState.bad + prevState.good + prevState.neutral;
-  //       console.log(totalFeedback);
-  //       return totalFeedback;
-  //     });
-  //   };
-
   render() {
+    const { good, neutral, bad } = this.state;
+
+    // Totatl
+    let countTotalFeedback = good + neutral + bad;
+
+    //   Positiv feedbacks
+    let countPositiveFeedbackPercentage = Math.round(
+      (good / countTotalFeedback) * 100
+    );
+
     return (
       <div>
         <h1>Please leave feedback</h1>
@@ -46,10 +47,11 @@ class Feedback extends React.Component {
           onBad={this.badFeedback}
         />
         <Statistics
-          //   total={this.totalFeedback}
-          onGood={this.state.good}
-          onBad={this.state.bad}
-          onNeutral={this.state.neutral}
+          positivFeedback={countPositiveFeedbackPercentage}
+          total={countTotalFeedback}
+          onGood={good}
+          onBad={bad}
+          onNeutral={neutral}
         />
       </div>
     );

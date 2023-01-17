@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Buttons = ({ onGood, onNeutral, onBad }) => (
   <div>
@@ -15,3 +16,9 @@ const Buttons = ({ onGood, onNeutral, onBad }) => (
 );
 
 export default Buttons;
+
+Buttons.propTypes = {
+  onGood: PropTypes.func.isRequired,
+  onNeutral: PropTypes.func.isRequired,
+  onBad: PropTypes.func.isRequired,
+};
