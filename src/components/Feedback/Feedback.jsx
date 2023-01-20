@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Statistics from 'components/Feedback/Statistics';
-import Buttons from 'components/Feedback/Buttons';
+import Statistics from 'components/Statistics/Statistics';
+import FeedbackOptions from 'components/FeedbackOptions/FeedbackOptions';
 
 class Feedback extends Component {
   state = {
@@ -8,27 +8,13 @@ class Feedback extends Component {
     neutral: 0,
     bad: 0,
   };
-
-  goodFeedback = () => {
-    this.setState(prevState => {
-      return { good: prevState.good + 1 };
-    });
-  };
-  neutralFeedback = () => {
-    this.setState(prevState => {
-      return { neutral: prevState.neutral + 1 };
-    });
-  };
-  badFeedback = () => {
-    this.setState(prevState => {
-      return {
-        bad: prevState.bad + 1,
-      };
-    });
+  onLeaveFeedback = option => {
+    this.setState({ [option]: this.state[option] + 1 });
   };
 
   render() {
     const { good, neutral, bad } = this.state;
+    const options = Object.keys(this.state);
 
     // Totatl
     let countTotalFeedback = good + neutral + bad;
@@ -41,10 +27,9 @@ class Feedback extends Component {
     return (
       <div>
         <h1>Please leave feedback</h1>
-        <Buttons
-          onGood={this.goodFeedback}
-          onNeutral={this.neutralFeedback}
-          onBad={this.badFeedback}
+        <FeedbackOptions
+          options={options}
+          onLeaveFeedback={this.onLeaveFeedback}
         />
         <Statistics
           positivFeedback={countPositiveFeedbackPercentage}
